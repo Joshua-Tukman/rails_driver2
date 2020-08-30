@@ -225,7 +225,7 @@ RSpec.describe 'Spec Harness' do
     it 'can find a list of merchants that contain a fragment, case insensitive' do
       response = conn('/api/v1/merchants/find_all?name=ILL').get
       json = JSON.parse(response.body, symbolize_names: true)
-
+      
       names = json[:data].map do |merchant|
         merchant[:attributes][:name]
       end
@@ -236,6 +236,7 @@ RSpec.describe 'Spec Harness' do
     it 'can find a merchants that contain a fragment, case insensitive' do
       response = conn('/api/v1/merchants/find?name=ILL').get
       json = JSON.parse(response.body, symbolize_names: true)
+  
       name = json[:data][:attributes][:name].downcase
 
       expect(json[:data]).to be_a(Hash)
@@ -245,11 +246,11 @@ RSpec.describe 'Spec Harness' do
     it 'can find a list of items that contain a fragment, case insensitive' do
       response = conn('/api/v1/items/find_all?name=haru').get
       json = JSON.parse(response.body, symbolize_names: true)
-
+     
       names = json[:data].map do |merchant|
         merchant[:attributes][:name].downcase
       end
-
+   
       expect(names.count).to eq(18)
       names.each do |name|
         expect(name).to include('haru')
@@ -302,9 +303,8 @@ RSpec.describe 'Spec Harness' do
 
     it 'can get revenue between two dates' do
       response = conn('/api/v1/revenue?start=2012-03-09&end=2012-03-24').get
-
       json = JSON.parse(response.body, symbolize_names: true)
-
+  
       expect(json[:data][:attributes][:revenue].to_f.round(2)).to eq(43201227.80)
     end
   end
